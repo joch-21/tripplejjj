@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<HTML lang="en">
+    <HEAD>
+        <link rel="stylesheet" type="text/css" href="WDGA_CSS.css">
+    <TITLE>
+        WDGA_page2
+    </TITLE>
+    <SCRIPT LANGUAGE="JavaScript">
+      function brandtoggleDrawer() {
+        const drawer = document.querySelector('.branddrawer');
+        drawer.classList.toggle('open');
+    }
+
+      document.addEventListener("DOMContentLoaded", function () {
+          const descriptionToggles = document.querySelectorAll(".description-toggle");
+    
+          descriptionToggles.forEach((toggle) => {
+              toggle.addEventListener("click", () => {
+                  const productCell = toggle.closest(".product-cell");
+                  let descriptionPopup;
+
+                      descriptionPopup = productCell.querySelector(".description");
+                  
+                  // Toggle the display of the corresponding description popup
+                  descriptionPopup.style.display =
+                      descriptionPopup.style.display === "block" ? "none" : "block";
+              });
+          });
+          const buttonCart = document.querySelectorAll(".btn-cart");
+          const checkoutInfos = document.querySelectorAll(".checkout-info");
+
+          buttonCart.forEach((button, index) => {
+            button.addEventListener('click', () => {
+              checkoutInfos[index].style.display =
+                checkoutInfos[index].style.display === "block" ? "none" : "block";
+            });
+          });
+      });
+
+      var cart = [];
+      var totalPrice = 0;
+
+      // Load cart data from localStorage on page load
+      window.onload = function() {
+        loadCartData();
+        updateCartDisplay();
+      };
+
+      function loadCartData() {
+        var storedCartNames = JSON.parse(window.localStorage.getItem("cartItems"));
+        var storedCartPrices = JSON.parse(window.localStorage.getItem("itemPrices"));
+        var storedTotalPrice = parseFloat(window.localStorage.getItem("totalPrice"));
+
+        if (storedCartNames && storedCartPrices && !isNaN(storedTotalPrice)) {
+          cart = storedCartNames.map((name, index) => ({ name: name, price: storedCartPrices[index] }));
+          totalPrice = storedTotalPrice;
+        }
+      }
+
+      function addToCart(productName, productPrice) {
+        if (cart.length >= 3) {
+          window.alert("Warning: Cannot add more items to the cart. Maximum 3 items only.");
+        } else if (totalPrice + productPrice > 3000) {
+          window.alert("Warning: Total has exceeded RM3000.00. Remove some items to continue.");
+        } else {
+          cart.push({ name: productName, price: productPrice });
+          totalPrice += productPrice;
+          updateCartDataAndDisplay();
+        }
+      }
+
+      function removeItem(index) {
+        var removedItem = cart.splice(index, 1)[0];
+        totalPrice -= removedItem.price;
+        updateCartDataAndDisplay();
+      }
+
+      function updateCartDataAndDisplay() {
+        updateLocalStorage();
+        updateCartDisplay();
+      }
+
+      function updateLocalStorage() {
+        var cartDataName = cart.map(item => item.name);
+        var cartDataPrice = cart.map(item => item.price);
+
+        window.localStorage.setItem("cartItems", JSON.stringify(cartDataName));
+        window.localStorage.setItem("itemPrices", JSON.stringify(cartDataPrice));
+        window.localStorage.setItem("totalPrice", totalPrice);
+      }
+
+      function updateCartDisplay() {
+        var cartDisplay = document.getElementById("cartDisplay");
+        cartDisplay.innerHTML = "";
+        for (var i = 0; i < cart.length; i++) {
+          cartDisplay.innerHTML += (i + 1) + ". " + cart[i].name + " - RM " + cart[i].price.toFixed(2);
+          cartDisplay.innerHTML += " <button class='btn-removeItem' onclick='removeItem(" + i + ")'>Remove item</button><br>";
+        }
+        var checkoutDisplay = document.getElementById("checkoutDisplay");
+        checkoutDisplay.innerHTML = "RM " + totalPrice.toFixed(2);
+      }
+
+      function cartPassingCheckout() {
+        if (cart.length === 0) {
+          window.alert("Warning: Cart is empty. Add items to the cart before checking out.");
+        } else {
+          // Redirect to the checkout page
+          window.top.location.href = "WDGA_chkpg.html";
+        }
+      }
+      
+    </SCRIPT>
+    </HEAD>
+    <BODY class="p_body">
+       
+      <div class="branddrawer">
+        <!-- Drawer Content Goes Here -->
+        <p>Choose a brand</p>
+        <DIV CLASS="brandhref">
+        <ul>
+            <li><a href="#JeePhone">JeePhone</a></li>
+            <li><a href="#Samseng">Samseng</a></li>
+            <li><a href="#JuliaPhone">JuliaPhone</a></li>
+            <li><a href="#Yeskia">Yeskia</a></li>
+            <li><a href="#WhiteMi">WhiteMi</a></li>
+            <li><a href="#ApolloPhone">ApolloPhone</a></li>
+            <li><a href="#ColorfulBerry">ColorfulBerry</a></li>
+            <li><a href="#Oppa">Oppa</a></li>
+        </ul>
+        </DIV>
+    </div>
+    <div class="brandtoggle-btn" onclick="brandtoggleDrawer()">☰</div>
+    
+  
+        <div class="container">
+            <HR>
+              <!--JeeTab Brand--> 
+            <A ID="JeePhone">
+            <H2 CLASS="textBrand">JeeTab</H2><BR>
+            <div class="product-row">
+                <div class="product-cell">
+                    <img src="product01.png" class="productImg" alt="Product Image">
+                    <h2>JeeTab A1</h2>
+                    <p class="description-toggle">Product Specifications</p>
+                    <p>Price: RM699</p>
+                    <button CLASS="atc-button" onclick="addToCart('JeeTab A1', 699)">Add to Cart</button>
+                    <div class="description popup-left">
+                      <table> 
+                        <tr>
+                          <td>Screen Size </td><td>: </td><td> 10.1 inches <td>
+                        </tr>
+                        <tr>
+                          <td>Screen Resolution </td><td>: </td><td> 1200 x 1920 pixels (16:10) <td>
+                        </tr>
+                        <tr>
+                          <td>Screen Type </td><td>: </td><td> LCD <td>
+                        </tr>
+                        <tr>
+                          <td>Speaker </td><td>: </td><td> Stereo Loudspeaker <td>
+                        </tr>
+                        <tr>
+                          <td>Processor </td><td>: </td><td> Externos 7904 <td>
+                        </tr>
+                        <tr>
+                          <td>RAM </td><td>: </td><td> 2GB <td>
+                        </tr>
+                        <tr>
+                          <td>Storage </td><td>: </td><td> 32GB <td>
+                        </tr>
+                        <tr>
+                          <td>Camera </td><td>: </td><td> 4MP, 1080p@30fps <td>
+                        </tr>
+                        <tr>
+                          <td>Operating System </td><td>: </td><td> JeeDroid 11 <td>
+                        </tr>
+                        <tr>
+                          <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                        </tr>
+                        <tr>
+                          <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0  <td>
+                        </tr>
+                        <tr>
+                          <td>Battery </td><td>: </td><td> Li-Po 6150mAh, non-removable <td>
+                        </tr>
+                        <tr>
+                          <td>Warranty </td><td>: </td><td> 2 years <td>
+                        </tr>
+                      </table>
+                    </div>
+                </div>
+              <div class="product-cell">
+                <img src="product02.png" class="productImg" alt="Product Image">
+                <h2>JeeTab B2</h2>
+                <p class="description-toggle">Product Specifications</p>
+                <p>Price: RM899</p>
+                <button CLASS="atc-button" onclick="addToCart('JeeTab B2', 899)">Add to Cart</button>
+                  <div class="description popup-right">
+                    <table> 
+                      <tr>
+                        <td>Screen Size </td><td>: </td><td> 11.3 inches <td>
+                      </tr>
+                      <tr>
+                        <td>Screen Resolution </td><td>: </td><td> 2048 x 1536 pixels (4:3) <td>
+                      </tr>
+                      <tr>
+                        <td>Screen Type </td><td>: </td><td> LCD <td>
+                      </tr>
+                      <tr>
+                        <td>Speaker </td><td>: </td><td> Stereo Loudspeaker <td>
+                      </tr>
+                      <tr>
+                        <td>Processor </td><td>: </td><td> Externos 8100 <td>
+                      </tr>
+                      <tr>
+                        <td>RAM </td><td>: </td><td> 4GB <td>
+                      </tr>
+                      <tr>
+                        <td>Storage </td><td>: </td><td> 64GB <td>
+                      </tr>
+                      <tr>
+                        <td>Camera </td><td>: </td><td> 4MP, 1080p@30fps <td>
+                      </tr>
+                      <tr>
+                        <td>Operating System </td><td>: </td><td> JeeDroid 14 <td>
+                      </tr>
+                      <tr>
+                        <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                      </tr>
+                      <tr>
+                        <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                      </tr>
+                      <tr>
+                        <td>Battery </td><td>: </td><td> Li-Po 6150mAh, non-removable <td>
+                      </tr>
+                      <tr>
+                        <td>Warranty </td><td>: </td><td> 2 years <td>
+                      </tr>
+                    </table>  
+                  </div>
+              </div>
+              
+            </div>
+            <div CLASS="product-row">
+                <div class="product-cell">
+                  <img src="product03.png" class="productImg" alt="Product Image">
+                  <h2>JeeTab C3</h2>
+                  <p class="description-toggle">Product Specifications</p>
+                  <p>Price: RM1199</p>
+                  <button CLASS="atc-button" onclick="addToCart('JeeTab C3', 1199)">Add to Cart</button>
+                  <div class="description popup-left">
+                    <table> 
+                      <tr>
+                        <td>Screen Size </td><td>: </td><td> 11.6 inches <td>
+                      </tr>
+                      <tr>
+                        <td>Screen Resolution </td><td>: </td><td> 1920 x 1080 (16:9) <td>
+                      </tr>
+                      <tr>
+                        <td>Screen Type </td><td>: </td><td> LCD <td>
+                      </tr>
+                      <tr>
+                        <td>Speaker </td><td>: </td><td> Stereo Loudspeaker <td>
+                      </tr>
+                      <tr>
+                        <td>Processor </td><td>: </td><td> Externos 8100 <td>
+                      </tr>
+                      <tr>
+                        <td>RAM </td><td>: </td><td> 6GB <td>
+                      </tr>
+                      <tr>
+                        <td>Storage </td><td>: </td><td> 128GB <td>
+                      </tr>
+                      <tr>
+                        <td>Camera </td><td>: </td><td> 8MP, 1080p@60fps <td>
+                      </tr>
+                      <tr>
+                        <td>Operating System </td><td>: </td><td> JeeDroid 14 <td>
+                      </tr>
+                      <tr>
+                        <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                      </tr>
+                      <tr>
+                        <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                      </tr>
+                      <tr>
+                        <td>Battery </td><td>: </td><td> 6720mAh <td>
+                      </tr>
+                      <tr>
+                        <td>Warranty </td><td>: </td><td> 2 years <td>
+                      </tr>
+                    </table>  
+                  </div>
+              </div>
+              <div class="product-cell">
+                <img src="product04.png" class="productImg" alt="Product Image">
+                <h2>JeeTab D4</h2>
+                <p class="description-toggle">Product Specifications</p>
+                <p>Price: RM1599</p>
+                <button CLASS="atc-button" onclick="addToCart('JeeTab D4', 1599)">Add to Cart</button>
+                  <div class="description popup-right">
+                    <table> 
+                      <tr>
+                        <td>Screen Size </td><td>: </td><td> 12.3 inches <td>
+                      </tr>
+                      <tr>
+                        <td>Screen Resolution </td><td>: </td><td> 2736 x 1824 (3:2) <td>
+                      </tr>
+                      <tr>
+                        <td>Screen Type </td><td>: </td><td> OLED <td>
+                      </tr>
+                      <tr>
+                        <td>Speaker </td><td>: </td><td> Stereo Loudspeaker <td>
+                      </tr>
+                      <tr>
+                        <td>Processor </td><td>: </td><td> Internox 9122 Ultra-Core <td>
+                      </tr>
+                      <tr>
+                        <td>RAM </td><td>: </td><td> 8GB <td>
+                      </tr>
+                      <tr>
+                        <td>Storage </td><td>: </td><td> 128GB <td>
+                      </tr>
+                      <tr>
+                        <td>Camera </td><td>: </td><td> 13MP, 4K@30fps <td>
+                      </tr>
+                      <tr>
+                        <td>Operating System </td><td>: </td><td> JeeDroid 14 Pro <td>
+                      </tr>
+                      <tr>
+                        <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                      </tr>
+                      <tr>
+                        <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                      </tr>
+                      <tr>
+                        <td>Battery </td><td>: </td><td> 7520mAh <td>
+                      </tr>
+                      <tr>
+                        <td>Warranty </td><td>: </td><td> 2 years <td>
+                      </tr>
+                    </table>  
+                  </div>
+              </div>
+            </div>
+            
+            <HR>
+              <!--Samseng Brand-->
+              <A ID="Samseng">
+                <H2 CLASS="textBrand">SamSeng</H2><BR>
+                  <div class="product-row">
+                    <div class="product-cell">
+                      <img src="product05.png" class="productImg" alt="Product Image">
+                        <h2>SengTab Milkyway 1</h2>
+                        <p class="description-toggle">Product Specifications</p>
+                        <p>Price: RM399</p>
+                        <button CLASS="atc-button" onclick="addToCart('SengTab Milkyway 1', 399)">Add to Cart</button>
+                        <div class="description popup-left">
+                          <table> 
+                            <tr>
+                              <td>Screen Size </td><td>: </td><td> 9.7 inches <td>
+                            </tr>
+                            <tr>
+                              <td>Screen Resolution </td><td>: </td><td> 2048 x 1536 (4:3) <td>
+                            </tr>
+                            <tr>
+                              <td>Screen Type </td><td>: </td><td> LCD <td>
+                            </tr>
+                            <tr>
+                              <td>Speaker </td><td>: </td><td> Mono <td>
+                            </tr>
+                            <tr>
+                              <td>Processor </td><td>: </td><td> snapUnicorn 460 <td>
+                            </tr>
+                            <tr>
+                              <td>RAM </td><td>: </td><td> 2GB <td>
+                            </tr>
+                            <tr>
+                              <td>Storage </td><td>: </td><td> 32GB <td>
+                            </tr>
+                            <tr>
+                              <td>Camera </td><td>: </td><td> 1MP, 720p@30fps <td>
+                            </tr>
+                            <tr>
+                              <td>Operating System </td><td>: </td><td> chaOS <td>
+                            </tr>
+                            <tr>
+                              <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                            </tr>
+                            <tr>
+                              <td>Bluetooth </td><td>: </td><td> Bluetooth 4.0 <td>
+                            </tr>
+                            <tr>
+                              <td>Battery </td><td>: </td><td> 4150mAh <td>
+                            </tr>
+                            <tr>
+                              <td>Warranty </td><td>: </td><td> 1 year <td>
+                            </tr>
+                          </table>  
+                        </div>
+                    </div>
+                  <div class="product-cell">
+                    <img src="product06.png" class="productImg" alt="Product Image">
+                    <h2>SengTab Milkyway 2</h2>
+                    <p class="description-toggle">Product Specifications</p>
+                    <p>Price: RM799</p>
+                    <button CLASS="atc-button" onclick="addToCart('SengTab Milkyway 2', 799)">Add to Cart</button>
+                      <div class="description popup-right">
+                        <table> 
+                          <tr>
+                            <td>Screen Size </td><td>: </td><td> 10.9 inches <td>
+                          </tr>
+                          <tr>
+                            <td>Screen Resolution </td><td>: </td><td> 2360 x 1640 (16:11) <td>
+                          </tr>
+                          <tr>
+                            <td>Screen Type </td><td>: </td><td> LCD <td>
+                          </tr>
+                          <tr>
+                            <td>Speaker </td><td>: </td><td> Mono <td>
+                          </tr>
+                          <tr>
+                            <td>Processor </td><td>: </td><td> snapUnicorn 612 <td>
+                          </tr>
+                          <tr>
+                            <td>RAM </td><td>: </td><td> 6GB <td>
+                          </tr>
+                          <tr>
+                            <td>Storage </td><td>: </td><td> 128GB <td>
+                          </tr>
+                          <tr>
+                            <td>Camera </td><td>: </td><td> 3MP, 720p@60fps <td>
+                          </tr>
+                          <tr>
+                            <td>Operating System </td><td>: </td><td> chaOS <td>
+                          </tr>
+                          <tr>
+                            <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                          </tr>
+                          <tr>
+                            <td>Bluetooth </td><td>: </td><td> Bluetooth 4.3 <td>
+                          </tr>
+                          <tr>
+                            <td>Battery </td><td>: </td><td> 4450mAh <td>
+                          </tr>
+                          <tr>
+                            <td>Warranty </td><td>: </td><td> 1 year <td>
+                          </tr>
+                        </table>  
+                      </div>
+                  </div>
+                  
+                </div>
+                <div CLASS="product-row">
+                    <div class="product-cell">
+                      <img src="product07.png" class="productImg" alt="Product Image">
+                      <h2>SengTab Milkyway 3</h2>
+                      <p class="description-toggle">Product Specifications</p>
+                      <p>Price: RM1199</p>
+                      <button CLASS="atc-button" onclick="addToCart('SengTab Milkyway 3', 1199)">Add to Cart</button>
+                      <div class="description popup-left">
+                        <table> 
+                          <tr>
+                            <td>Screen Size </td><td>: </td><td> 11.3 inches <td>
+                          </tr>
+                          <tr>
+                            <td>Screen Resolution </td><td>: </td><td> 2048 x 1536 (4:3) <td>
+                          </tr>
+                          <tr>
+                            <td>Screen Type </td><td>: </td><td> LCD <td>
+                          </tr>
+                          <tr>
+                            <td>Speaker </td><td>: </td><td> Stereo <td>
+                          </tr>
+                          <tr>
+                            <td>Processor </td><td>: </td><td> snapUnicorn 772 <td>
+                          </tr>
+                          <tr>
+                            <td>RAM </td><td>: </td><td> 6GB <td>
+                          </tr>
+                          <tr>
+                            <td>Storage </td><td>: </td><td> 128GB <td>
+                          </tr>
+                          <tr>
+                            <td>Camera </td><td>: </td><td> 6MP, 4K/HD/UHD@30fps/60fps <td>
+                          </tr>
+                          <tr>
+                            <td>Operating System </td><td>: </td><td> chaOS <td>
+                          </tr>
+                          <tr>
+                            <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                          </tr>
+                          <tr>
+                            <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                          </tr>
+                          <tr>
+                            <td>Battery </td><td>: </td><td> 5120mAh <td>
+                          </tr>
+                          <tr>
+                            <td>Warranty </td><td>: </td><td> 2 years <td>
+                          </tr>
+                        </table>  
+                      </div>
+                  </div>
+                  <div class="product-cell">
+                    <img src="product08.png" class="productImg" alt="Product Image">
+                    <h2>SengTab Milkyway 3 Ultra</h2>
+                    <p class="description-toggle">Product Specifications</p>
+                    <p>Price: RM1799</p>
+                    <button CLASS="atc-button" onclick="addToCart('SengTab Milkyway 3 Ultra', 1799)">Add to Cart</button>
+                      <div class="description popup-right">
+                        <table> 
+                          <tr>
+                            <td>Screen Size </td><td>: </td><td> 12.3 inches <td>
+                          </tr>
+                          <tr>
+                            <td>Screen Resolution </td><td>: </td><td> 2736 x 1824 (3:2) <td>
+                          </tr>
+                          <tr>
+                            <td>Screen Type </td><td>: </td><td> OLED <td>
+                          </tr>
+                          <tr>
+                            <td>Speaker </td><td>: </td><td> Stereo <td>
+                          </tr>
+                          <tr>
+                            <td>Processor </td><td>: </td><td> snapUnicorn Ultra V70x <td>
+                          </tr>
+                          <tr>
+                            <td>RAM </td><td>: </td><td> 8GB <td>
+                          </tr>
+                          <tr>
+                            <td>Storage </td><td>: </td><td> 256GB <td>
+                          </tr>
+                          <tr>
+                            <td>Camera </td><td>: </td><td> 16MP, UHD/4K/HD@30fps/60fps <td>
+                          </tr>
+                          <tr>
+                            <td>Operating System </td><td>: </td><td> chaOS <td>
+                          </tr>
+                          <tr>
+                            <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                          </tr>
+                          <tr>
+                            <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0  <td>
+                          </tr>
+                          <tr>
+                            <td>Battery </td><td>: </td><td> 6210mAh <td>
+                          </tr>
+                          <tr>
+                            <td>Warranty </td><td>: </td><td> 2 years <td>
+                          </tr>
+                        </table>  
+                      </div>
+                  </div>
+                </div>
+
+            <HR>
+              <!--JuliaTab Brand-->
+              <A ID="JuliaPhone">
+              <H2 CLASS="textBrand">JuliaTab</H2><BR>
+                <div class="product-row">
+                  <div class="product-cell">
+                    <img src="product09.png" class="productImg" alt="Product Image">
+                      <h2>JuliaTab A1</h2>
+                      <p class="description-toggle">Product Specifications</p>
+                      <p>Price: RM399</p>
+                      <button CLASS="atc-button" onclick="addToCart('JuliaTab A1', 399)">Add to Cart</button>
+                      <div class="description popup-left">
+                        <table> 
+                          <tr>
+                            <td>Screen Size </td><td>: </td><td> 10.9 inches <td>
+                          </tr>
+                          <tr>
+                            <td>Screen Resolution </td><td>: </td><td> 2360 x 1640 (16:11) <td>
+                          </tr>
+                          <tr>
+                            <td>Screen Type </td><td>: </td><td> LCD <td>
+                          </tr>
+                          <tr>
+                            <td>Speaker </td><td>: </td><td> Stereo <td>
+                          </tr>
+                          <tr>
+                            <td>Processor </td><td>: </td><td> JulForce 22 <td>
+                          </tr>
+                          <tr>
+                            <td>RAM </td><td>: </td><td> 3GB <td>
+                          </tr>
+                          <tr>
+                            <td>Storage </td><td>: </td><td> 32GB <td>
+                          </tr>
+                          <tr>
+                            <td>Camera </td><td>: </td><td> 1MP, 720p@30fps <td>
+                          </tr>
+                          <tr>
+                            <td>Operating System </td><td>: </td><td> JuliOS <td>
+                          </tr>
+                          <tr>
+                            <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                          </tr>
+                          <tr>
+                            <td>Bluetooth </td><td>: </td><td> Bluetooth 4.0 <td>
+                          </tr>
+                          <tr>
+                            <td>Battery </td><td>: </td><td> 3150mAh <td>
+                          </tr>
+                          <tr>
+                            <td>Warranty </td><td>: </td><td> 1 year <td>
+                          </tr>
+                        </table>  
+                      </div>
+                  </div>
+                <div class="product-cell">
+                  <img src="product10.png" class="productImg" alt="Product Image">
+                  <h2>JuliaTab A2</h2>
+                  <p class="description-toggle">Product Specifications</p>
+                  <p>Price: RM899</p>
+                  <button CLASS="atc-button" onclick="addToCart('JuliaTab A2', 899)">Add to Cart</button>
+                    <div class="description popup-right">
+                      <table> 
+                        <tr>
+                          <td>Screen Size </td><td>: </td><td> 10.9 inches <td>
+                        </tr>
+                        <tr>
+                          <td>Screen Resolution </td><td>: </td><td> 2360 x 1640 (16:11) <td>
+                        </tr>
+                        <tr>
+                          <td>Screen Type </td><td>: </td><td> OLED <td>
+                        </tr>
+                        <tr>
+                          <td>Speaker </td><td>: </td><td> Stereo <td>
+                        </tr>
+                        <tr>
+                          <td>Processor </td><td>: </td><td> JulForce 22 <td>
+                        </tr>
+                        <tr>
+                          <td>RAM </td><td>: </td><td> 6GB <td>
+                        </tr>
+                        <tr>
+                          <td>Storage </td><td>: </td><td> 64GB <td>
+                        </tr>
+                        <tr>
+                          <td>Camera </td><td>: </td><td> 4MP, HD@60fps <td>
+                        </tr>
+                        <tr>
+                          <td>Operating System </td><td>: </td><td> JuliOS <td>
+                        </tr>
+                        <tr>
+                          <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                        </tr>
+                        <tr>
+                          <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                        </tr>
+                        <tr>
+                          <td>Battery </td><td>: </td><td> 4275mAh <td>
+                        </tr>
+                        <tr>
+                          <td>Warranty </td><td>: </td><td> 2 years <td>
+                        </tr>
+                      </table>  
+                    </div>
+                </div>
+                
+              </div>
+              <div CLASS="product-row">
+                  <div class="product-cell">
+                    <img src="product11.png" class="productImg" alt="Product Image">
+                    <h2>JuliaTab A3</h2>
+                    <p class="description-toggle">Product Specifications</p>
+                    <p>Price: RM1599</p>
+                    <button CLASS="atc-button" onclick="addToCart('JuliaTab A3', 1599)">Add to Cart</button>
+                    <div class="description popup-left">
+                      <table> 
+                        <tr>
+                          <td>Screen Size </td><td>: </td><td> 11.3 inches <td>
+                        </tr>
+                        <tr>
+                          <td>Screen Resolution </td><td>: </td><td> 2048 x 1536 (4:3) <td>
+                        </tr>
+                        <tr>
+                          <td>Screen Type </td><td>: </td><td> OLED <td>
+                        </tr>
+                        <tr>
+                          <td>Speaker </td><td>: </td><td> Stereo <td>
+                        </tr>
+                        <tr>
+                          <td>Processor </td><td>: </td><td> JulForce Turbo Xe <td>
+                        </tr>
+                        <tr>
+                          <td>RAM </td><td>: </td><td> 8GB <td>
+                        </tr>
+                        <tr>
+                          <td>Storage </td><td>: </td><td> 128GB <td>
+                        </tr>
+                        <tr>
+                          <td>Camera </td><td>: </td><td> 16MP, HD/UHD/4K@30fps/60fps <td>
+                        </tr>
+                        <tr>
+                          <td>Operating System </td><td>: </td><td> JuliOS <td>
+                        </tr>
+                        <tr>
+                          <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                        </tr>
+                        <tr>
+                          <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                        </tr>
+                        <tr>
+                          <td>Battery </td><td>: </td><td> 4525mAh <td>
+                        </tr>
+                        <tr>
+                          <td>Warranty </td><td>: </td><td> 2 years <td>
+                        </tr>
+                      </table>  
+                    </div>
+                </div>
+                <div class="product-cell">
+                  <img src="product12.png" class="productImg" alt="Product Image">
+                  <h2>JuliaTab A3 Max</h2>
+                  <p class="description-toggle">Product Specifications</p>
+                  <p>Price: RM2199</p>
+                  <button CLASS="atc-button" onclick="addToCart('JuliaTab A3 Max', 2199)">Add to Cart</button>
+                    <div class="description popup-right">
+                      <table> 
+                        <tr>
+                          <td>Screen Size </td><td>: </td><td> 12.3 inches <td>
+                        </tr>
+                        <tr>
+                          <td>Screen Resolution </td><td>: </td><td> 2736 x 1824 (3:2) <td>
+                        </tr>
+                        <tr>
+                          <td>Screen Type </td><td>: </td><td> OLED <td>
+                        </tr>
+                        <tr>
+                          <td>Speaker </td><td>: </td><td> Stereo <td>
+                        </tr>
+                        <tr>
+                          <td>Processor </td><td>: </td><td> JulForce Ultimate <td>
+                        </tr>
+                        <tr>
+                          <td>RAM </td><td>: </td><td> 8GB <td>
+                        </tr>
+                        <tr>
+                          <td>Storage </td><td>: </td><td> 256GB <td>
+                        </tr>
+                        <tr>
+                          <td>Camera </td><td>: </td><td> 30MP, UHD/HD/4K@30fps/60fps <td>
+                        </tr>
+                        <tr>
+                          <td>Operating System </td><td>: </td><td> JuliOS <td>
+                        </tr>
+                        <tr>
+                          <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac/ax, dual-band <td>
+                        </tr>
+                        <tr>
+                          <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                        </tr>
+                        <tr>
+                          <td>Battery </td><td>: </td><td> 5250mAh <td>
+                        </tr>
+                        <tr>
+                          <td>Warranty </td><td>: </td><td> 2 years <td>
+                        </tr>
+                      </table>  
+                    </div>
+                </div>
+              </div>
+
+            <HR>
+                <!--YesKia Brand-->
+                <A ID="Yeskia">
+                <H2 CLASS="textBrand">YesKia</H2><BR>
+                  <div class="product-row">
+                    <div class="product-cell">
+                      <img src="product13.png" class="productImg" alt="Product Image">
+                        <h2>YesPad 1</h2>
+                        <p class="description-toggle">Product Specifications</p>
+                        <p>Price: RM599</p>
+                        <button CLASS="atc-button" onclick="addToCart('YesPad 1', 599)">Add to Cart</button>
+                        <div class="description popup-left">
+                          <table> 
+                            <tr>
+                              <td>Screen Size </td><td>: </td><td> 10.9 inches <td>
+                            </tr>
+                            <tr>
+                              <td>Screen Resolution </td><td>: </td><td> 2360 x 1640 (16:11) <td>
+                            </tr>
+                            <tr>
+                              <td>Screen Type </td><td>: </td><td> LCD <td>
+                            </tr>
+                            <tr>
+                              <td>Speaker </td><td>: </td><td> Stereo <td>
+                            </tr>
+                            <tr>
+                              <td>Processor </td><td>: </td><td> YeX 140 <td>
+                            </tr>
+                            <tr>
+                              <td>RAM </td><td>: </td><td> 3GB <td>
+                            </tr>
+                            <tr>
+                              <td>Storage </td><td>: </td><td> 32GB <td>
+                            </tr>
+                            <tr>
+                              <td>Camera </td><td>: </td><td> 1MP, 720p@30fps <td>
+                            </tr>
+                            <tr>
+                              <td>Operating System </td><td>: </td><td> YeOS <td>
+                            </tr>
+                            <tr>
+                              <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                            </tr>
+                            <tr>
+                              <td>Bluetooth </td><td>: </td><td> Bluetooth 4.0 <td>
+                            </tr>
+                            <tr>
+                              <td>Battery </td><td>: </td><td> 3150mAh <td>
+                            </tr>
+                            <tr>
+                              <td>Warranty </td><td>: </td><td> 1 year <td>
+                            </tr>
+                          </table>  
+                        </div>
+                    </div>
+                  <div class="product-cell">
+                    <img src="product14.png" class="productImg" alt="Product Image">
+                    <h2>YesPad 2</h2>
+                    <p class="description-toggle">Product Specifications</p>
+                    <p>Price: RM839</p>
+                    <button CLASS="atc-button" onclick="addToCart('YesPad 2', 839)">Add to Cart</button>
+                      <div class="description popup-right">
+                        <table> 
+                          <tr>
+                            <td>Screen Size </td><td>: </td><td> 10.9 inches <td>
+                          </tr>
+                          <tr>
+                            <td>Screen Resolution </td><td>: </td><td> 2360 x 1640 (16:11) <td>
+                          </tr>
+                          <tr>
+                            <td>Screen Type </td><td>: </td><td> LCD <td>
+                          </tr>
+                          <tr>
+                            <td>Speaker </td><td>: </td><td> Stereo <td>
+                          </tr>
+                          <tr>
+                            <td>Processor </td><td>: </td><td> YeX 140 <td>
+                          </tr>
+                          <tr>
+                            <td>RAM </td><td>: </td><td> 6GB <td>
+                          </tr>
+                          <tr>
+                            <td>Storage </td><td>: </td><td> 64GB <td>
+                          </tr>
+                          <tr>
+                            <td>Camera </td><td>: </td><td> 4MP, HD@60fps <td>
+                          </tr>
+                          <tr>
+                            <td>Operating System </td><td>: </td><td> YeOS <td>
+                          </tr>
+                          <tr>
+                            <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                          </tr>
+                          <tr>
+                            <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                          </tr>
+                          <tr>
+                            <td>Battery </td><td>: </td><td> 4275mAh <td>
+                          </tr>
+                          <tr>
+                            <td>Warranty </td><td>: </td><td> 2 years <td>
+                          </tr>
+                        </table>  
+                      </div>
+                  </div>
+                  
+                </div>
+                <div CLASS="product-row">
+                    <div class="product-cell">
+                      <img src="product15.png" class="productImg" alt="Product Image">
+                      <h2>YesPad Note 1</h2>
+                      <p class="description-toggle">Product Specifications</p>
+                      <p>Price: RM1169</p>
+                      <button CLASS="atc-button" onclick="addToCart('YesPad Note 1', 1169)">Add to Cart</button>
+                      <div class="description popup-left">
+                        <table> 
+                          <tr>
+                            <td>Screen Size </td><td>: </td><td> 11.3 inches <td>
+                          </tr>
+                          <tr>
+                            <td>Screen Resolution </td><td>: </td><td> 2048 x 1536 (4:3) <td>
+                          </tr>
+                          <tr>
+                            <td>Screen Type </td><td>: </td><td> OLED <td>
+                          </tr>
+                          <tr>
+                            <td>Speaker </td><td>: </td><td> Stereo <td>
+                          </tr>
+                          <tr>
+                            <td>Processor </td><td>: </td><td> YeX 151 <td>
+                          </tr>
+                          <tr>
+                            <td>RAM </td><td>: </td><td> 8GB <td>
+                          </tr>
+                          <tr>
+                            <td>Storage </td><td>: </td><td> 128GB <td>
+                          </tr>
+                          <tr>
+                            <td>Camera </td><td>: </td><td> 16MP, HD/UHD/4K@30fps/60fps <td>
+                          </tr>
+                          <tr>
+                            <td>Operating System </td><td>: </td><td> YeOS <td>
+                          </tr>
+                          <tr>
+                            <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                          </tr>
+                          <tr>
+                            <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                          </tr>
+                          <tr>
+                            <td>Battery </td><td>: </td><td> 4525mAh <td>
+                          </tr>
+                          <tr>
+                            <td>Warranty </td><td>: </td><td> 2 years <td>
+                          </tr>
+                        </table>  
+                      </div>
+                  </div>
+                  <div class="product-cell">
+                    <img src="product16.png" class="productImg" alt="Product Image">
+                    <h2>YesPad Note 2</h2>
+                    <p class="description-toggle">Product Specifications</p>
+                    <p>Price: RM1579</p>
+                    <button CLASS="atc-button" onclick="addToCart('YesPad Note 2', 1579)">Add to Cart</button>
+                      <div class="description popup-right">
+                        <table> 
+                          <tr>
+                            <td>Screen Size </td><td>: </td><td> 12.3 inches <td>
+                          </tr>
+                          <tr>
+                            <td>Screen Resolution </td><td>: </td><td> 2736 x 1824 (3:2) <td>
+                          </tr>
+                          <tr>
+                            <td>Screen Type </td><td>: </td><td> OLED <td>
+                          </tr>
+                          <tr>
+                            <td>Speaker </td><td>: </td><td> Stereo <td>
+                          </tr>
+                          <tr>
+                            <td>Processor </td><td>: </td><td> YeX 152 <td>
+                          </tr>
+                          <tr>
+                            <td>RAM </td><td>: </td><td> 8GB <td>
+                          </tr>
+                          <tr>
+                            <td>Storage </td><td>: </td><td> 256GB <td>
+                          </tr>
+                          <tr>
+                            <td>Camera </td><td>: </td><td> 30MP, UHD/HD/4K@30fps/60fps <td>
+                          </tr>
+                          <tr>
+                            <td>Operating System </td><td>: </td><td> YeOS <td>
+                          </tr>
+                          <tr>
+                            <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac/ax, dual-band <td>
+                          </tr>
+                          <tr>
+                            <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                          </tr>
+                          <tr>
+                            <td>Battery </td><td>: </td><td> 5250mAh <td>
+                          </tr>
+                          <tr>
+                            <td>Warranty </td><td>: </td><td> 2 years <td>
+                          </tr>
+                        </table>  
+                      </div>
+                  </div>
+                </div>
+  
+              <HR>
+                  <!--WhiteMi Brand-->
+                  <A ID="WhiteMi"></A>
+                  <H2 CLASS="textBrand">WhiteMi</H2><BR>
+                    <div class="product-row">
+                      <div class="product-cell">
+                        <img src="product17.png" class="productImg" alt="Product Image">
+                          <h2>WM Tab S1</h2>
+                          <p class="description-toggle">Product Specifications</p>
+                          <p>Price: RM599</p>
+                          <button CLASS="atc-button" onclick="addToCart('WM Tab S1', 599)">Add to Cart</button>
+                          <div class="description popup-left">
+                            <table> 
+                              <tr>
+                                <td>Screen Size </td><td>: </td><td> 10.9 inches <td>
+                              </tr>
+                              <tr>
+                                <td>Screen Resolution </td><td>: </td><td> 2360 x 1640 (16:11) <td>
+                              </tr>
+                              <tr>
+                                <td>Screen Type </td><td>: </td><td> LCD <td>
+                              </tr>
+                              <tr>
+                                <td>Speaker </td><td>: </td><td> Stereo <td>
+                              </tr>
+                              <tr>
+                                <td>Processor </td><td>: </td><td> SnapWhite 140 <td>
+                              </tr>
+                              <tr>
+                                <td>RAM </td><td>: </td><td> 3GB <td>
+                              </tr>
+                              <tr>
+                                <td>Storage </td><td>: </td><td> 32GB <td>
+                              </tr>
+                              <tr>
+                                <td>Camera </td><td>: </td><td> 1MP, 720p@30fps <td>
+                              </tr>
+                              <tr>
+                                <td>Operating System </td><td>: </td><td> WMiOS <td>
+                              </tr>
+                              <tr>
+                                <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                              </tr>
+                              <tr>
+                                <td>Bluetooth </td><td>: </td><td> Bluetooth 4.0 <td>
+                              </tr>
+                              <tr>
+                                <td>Battery </td><td>: </td><td> 3150mAh <td>
+                              </tr>
+                              <tr>
+                                <td>Warranty </td><td>: </td><td> 1 year <td>
+                              </tr>
+                            </table>  
+                          </div>
+                      </div>
+                    <div class="product-cell">
+                      <img src="product18.png" class="productImg" alt="Product Image">
+                      <h2>WM Tab S2</h2>
+                      <p class="description-toggle">Product Specifications</p>
+                      <p>Price: RM799</p>
+                      <button CLASS="atc-button" onclick="addToCart('WM Tab S2', 799)">Add to Cart</button>
+                        <div class="description popup-right">
+                          <table> 
+                            <tr>
+                              <td>Screen Size </td><td>: </td><td> 10.9 inches <td>
+                            </tr>
+                            <tr>
+                              <td>Screen Resolution </td><td>: </td><td> 2360 x 1640 (16:11) <td>
+                            </tr>
+                            <tr>
+                              <td>Screen Type </td><td>: </td><td> OLED <td>
+                            </tr>
+                            <tr>
+                              <td>Speaker </td><td>: </td><td> Stereo <td>
+                            </tr>
+                            <tr>
+                              <td>Processor </td><td>: </td><td> SnapWhite 140 <td>
+                            </tr>
+                            <tr>
+                              <td>RAM </td><td>: </td><td> 6GB <td>
+                            </tr>
+                            <tr>
+                              <td>Storage </td><td>: </td><td> 64GB <td>
+                            </tr>
+                            <tr>
+                              <td>Camera </td><td>: </td><td> 4MP, HD@60fps <td>
+                            </tr>
+                            <tr>
+                              <td>Operating System </td><td>: </td><td> WMiOS <td>
+                            </tr>
+                            <tr>
+                              <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                            </tr>
+                            <tr>
+                              <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                            </tr>
+                            <tr>
+                              <td>Battery </td><td>: </td><td> 4275mAh <td>
+                            </tr>
+                            <tr>
+                              <td>Warranty </td><td>: </td><td> 2 years <td>
+                            </tr>
+                          </table>  
+                        </div>
+                    </div>
+                    
+                  </div>
+                  <div CLASS="product-row">
+                      <div class="product-cell">
+                        <img src="product19.png" class="productImg" alt="Product Image">
+                        <h2>WM Tab S3</h2>
+                        <p class="description-toggle">Product Specifications</p>
+                        <p>Price: RM999</p>
+                        <button CLASS="atc-button" onclick="addToCart('WM Tab S3', 999)">Add to Cart</button>
+                        <div class="description popup-left">
+                          <table> 
+                            <tr>
+                              <td>Screen Size </td><td>: </td><td> 11.3 inches <td>
+                            </tr>
+                            <tr>
+                              <td>Screen Resolution </td><td>: </td><td> 2048 x 1536 (4:3) <td>
+                            </tr>
+                            <tr>
+                              <td>Screen Type </td><td>: </td><td> OLED <td>
+                            </tr>
+                            <tr>
+                              <td>Speaker </td><td>: </td><td> Stereo <td>
+                            </tr>
+                            <tr>
+                              <td>Processor </td><td>: </td><td> SnapWhite 144 <td>
+                            </tr>
+                            <tr>
+                              <td>RAM </td><td>: </td><td> 8GB <td>
+                            </tr>
+                            <tr>
+                              <td>Storage </td><td>: </td><td> 128GB <td>
+                            </tr>
+                            <tr>
+                              <td>Camera </td><td>: </td><td> 16MP, HD/UHD/4K@30fps/60fps <td>
+                            </tr>
+                            <tr>
+                              <td>Operating System </td><td>: </td><td> WMiOS <td>
+                            </tr>
+                            <tr>
+                              <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                            </tr>
+                            <tr>
+                              <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                            </tr>
+                            <tr>
+                              <td>Battery </td><td>: </td><td> 4525mAh <td>
+                            </tr>
+                            <tr>
+                              <td>Warranty </td><td>: </td><td> 2 years <td>
+                            </tr>
+                          </table>  
+                        </div>
+                    </div>
+                    <div class="product-cell">
+                      <img src="product20.png" class="productImg" alt="Product Image">
+                      <h2>WM Tab S4</h2>
+                      <p class="description-toggle">Product Specifications</p>
+                      <p>Price: RM1399</p>
+                      <button CLASS="atc-button" onclick="addToCart('WM Tab S4', 1399)">Add to Cart</button>
+                        <div class="description popup-right">
+                          <table> 
+                            <tr>
+                              <td>Screen Size </td><td>: </td><td> 12.3 inches <td>
+                            </tr>
+                            <tr>
+                              <td>Screen Resolution </td><td>: </td><td> 2736 x 1824 (3:2) <td>
+                            </tr>
+                            <tr>
+                              <td>Screen Type </td><td>: </td><td> OLED <td>
+                            </tr>
+                            <tr>
+                              <td>Speaker </td><td>: </td><td> Stereo <td>
+                            </tr>
+                            <tr>
+                              <td>Processor </td><td>: </td><td> SnapWhite 160 <td>
+                            </tr>
+                            <tr>
+                              <td>RAM </td><td>: </td><td> 8GB <td>
+                            </tr>
+                            <tr>
+                              <td>Storage </td><td>: </td><td> 256GB <td>
+                            </tr>
+                            <tr>
+                              <td>Camera </td><td>: </td><td> 30MP, UHD/HD/4K@30fps/60fps <td>
+                            </tr>
+                            <tr>
+                              <td>Operating System </td><td>: </td><td> WMiOS <td>
+                            </tr>
+                            <tr>
+                              <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac/ax, dual-band <td>
+                            </tr>
+                            <tr>
+                              <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                            </tr>
+                            <tr>
+                              <td>Battery </td><td>: </td><td> 5250mAh <td>
+                            </tr>
+                            <tr>
+                              <td>Warranty </td><td>: </td><td> 2 years <td>
+                            </tr>
+                          </table>  
+                        </div>
+                    </div>
+                  </div>
+    
+                <HR>
+                    <!--Apollo Brand-->
+                    <A ID="ApolloPhone"></A>
+                    <H2 CLASS="textBrand">Apollo</H2><BR>
+                      <div class="product-row">
+                        <div class="product-cell">
+                          <img src="product21.png" class="productImg" alt="Product Image">
+                            <h2>ATab Gen1</h2>
+                            <p class="description-toggle">Product Specifications</p>
+                            <p>Price: RM499</p>
+                            <button CLASS="atc-button" onclick="addToCart('ATab Gen1', 499)">Add to Cart</button>
+                            <div class="description popup-left">
+                              <table> 
+                                <tr>
+                                  <td>Screen Size </td><td>: </td><td> 10.9 inches <td>
+                                </tr>
+                                <tr>
+                                  <td>Screen Resolution </td><td>: </td><td> 2360 x 1640 (16:11) <td>
+                                </tr>
+                                <tr>
+                                  <td>Screen Type </td><td>: </td><td> LCD <td>
+                                </tr>
+                                <tr>
+                                  <td>Speaker </td><td>: </td><td> Stereo <td>
+                                </tr>
+                                <tr>
+                                  <td>Processor </td><td>: </td><td> JulForce 22 <td>
+                                </tr>
+                                <tr>
+                                  <td>RAM </td><td>: </td><td> 3GB <td>
+                                </tr>
+                                <tr>
+                                  <td>Storage </td><td>: </td><td> 32GB <td>
+                                </tr>
+                                <tr>
+                                  <td>Camera </td><td>: </td><td> 1MP, 720p@30fps <td>
+                                </tr>
+                                <tr>
+                                  <td>Operating System </td><td>: </td><td> ApolOS <td>
+                                </tr>
+                                <tr>
+                                  <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                                </tr>
+                                <tr>
+                                  <td>Bluetooth </td><td>: </td><td> Bluetooth 4.0 <td>
+                                </tr>
+                                <tr>
+                                  <td>Battery </td><td>: </td><td> 3150mAh <td>
+                                </tr>
+                                <tr>
+                                  <td>Warranty </td><td>: </td><td> 1 year <td>
+                                </tr>
+                              </table>  
+                            </div>
+                        </div>
+                      <div class="product-cell">
+                        <img src="product22.png" class="productImg" alt="Product Image">
+                        <h2>ATab Gen2</h2>
+                        <p class="description-toggle">Product Specifications</p>
+                        <p>Price: RM799</p>
+                        <button CLASS="atc-button" onclick="addToCart('ATab Gen2', 799)">Add to Cart</button>
+                          <div class="description popup-right">
+                            <table> 
+                              <tr>
+                                <td>Screen Size </td><td>: </td><td> 10.9 inches <td>
+                              </tr>
+                              <tr>
+                                <td>Screen Resolution </td><td>: </td><td> 2360 x 1640 (16:11) <td>
+                              </tr>
+                              <tr>
+                                <td>Screen Type </td><td>: </td><td> OLED <td>
+                              </tr>
+                              <tr>
+                                <td>Speaker </td><td>: </td><td> Stereo <td>
+                              </tr>
+                              <tr>
+                                <td>Processor </td><td>: </td><td> JulForce 22 <td>
+                              </tr>
+                              <tr>
+                                <td>RAM </td><td>: </td><td> 6GB <td>
+                              </tr>
+                              <tr>
+                                <td>Storage </td><td>: </td><td> 64GB <td>
+                              </tr>
+                              <tr>
+                                <td>Camera </td><td>: </td><td> 4MP, HD@60fps <td>
+                              </tr>
+                              <tr>
+                                <td>Operating System </td><td>: </td><td> ApolOS <td>
+                              </tr>
+                              <tr>
+                                <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                              </tr>
+                              <tr>
+                                <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                              </tr>
+                              <tr>
+                                <td>Battery </td><td>: </td><td> 4275mAh <td>
+                              </tr>
+                              <tr>
+                                <td>Warranty </td><td>: </td><td> 2 years <td>
+                              </tr>
+                            </table>  
+                          </div>
+                      </div>
+                      
+                    </div>
+                    <div CLASS="product-row">
+                        <div class="product-cell">
+                          <img src="product23.png" class="productImg" alt="Product Image">
+                          <h2>ATab Gen3</h2>
+                          <p class="description-toggle">Product Specifications</p>
+                          <p>Price: RM1099</p>
+                          <button CLASS="atc-button" onclick="addToCart('ATab Gen3', 1099)">Add to Cart</button>
+                          <div class="description popup-left">
+                            <table> 
+                              <tr>
+                                <td>Screen Size </td><td>: </td><td> 11.3 inches <td>
+                              </tr>
+                              <tr>
+                                <td>Screen Resolution </td><td>: </td><td> 2048 x 1536 (4:3) <td>
+                              </tr>
+                              <tr>
+                                <td>Screen Type </td><td>: </td><td> OLED <td>
+                              </tr>
+                              <tr>
+                                <td>Speaker </td><td>: </td><td> Stereo <td>
+                              </tr>
+                              <tr>
+                                <td>Processor </td><td>: </td><td> JulForce 22 <td>
+                              </tr>
+                              <tr>
+                                <td>RAM </td><td>: </td><td> 8GB <td>
+                              </tr>
+                              <tr>
+                                <td>Storage </td><td>: </td><td> 128GB <td>
+                              </tr>
+                              <tr>
+                                <td>Camera </td><td>: </td><td> 16MP, HD/UHD/4K@30fps/60fps <td>
+                              </tr>
+                              <tr>
+                                <td>Operating System </td><td>: </td><td> ApolOS <td>
+                              </tr>
+                              <tr>
+                                <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                              </tr>
+                              <tr>
+                                <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                              </tr>
+                              <tr>
+                                <td>Battery </td><td>: </td><td> 4525mAh <td>
+                              </tr>
+                              <tr>
+                                <td>Warranty </td><td>: </td><td> 2 years <td>
+                              </tr>
+                            </table>  
+                          </div>
+                      </div>
+                      <div class="product-cell">
+                        <img src="product24.png" class="productImg" alt="Product Image">
+                        <h2>ATab Gen4</h2>
+                        <p class="description-toggle">Product Specifications</p>
+                        <p>Price: RM1299</p>
+                        <button CLASS="atc-button" onclick="addToCart('ATab Gen4', 1299)">Add to Cart</button>
+                          <div class="description popup-right">
+                            <table> 
+                              <tr>
+                                <td>Screen Size </td><td>: </td><td> 12.3 inches <td>
+                              </tr>
+                              <tr>
+                                <td>Screen Resolution </td><td>: </td><td> 2736 x 1824 (3:2) <td>
+                              </tr>
+                              <tr>
+                                <td>Screen Type </td><td>: </td><td> OLED <td>
+                              </tr>
+                              <tr>
+                                <td>Speaker </td><td>: </td><td> Stereo <td>
+                              </tr>
+                              <tr>
+                                <td>Processor </td><td>: </td><td> JulForce 22 <td>
+                              </tr>
+                              <tr>
+                                <td>RAM </td><td>: </td><td> 8GB <td>
+                              </tr>
+                              <tr>
+                                <td>Storage </td><td>: </td><td> 256GB <td>
+                              </tr>
+                              <tr>
+                                <td>Camera </td><td>: </td><td> 30MP, UHD/HD/4K@30fps/60fps <td>
+                              </tr>
+                              <tr>
+                                <td>Operating System </td><td>: </td><td> ApolOS <td>
+                              </tr>
+                              <tr>
+                                <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac/ax, dual-band <td>
+                              </tr>
+                              <tr>
+                                <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                              </tr>
+                              <tr>
+                                <td>Battery </td><td>: </td><td> 5250mAh <td>
+                              </tr>
+                              <tr>
+                                <td>Warranty </td><td>: </td><td> 2 years <td>
+                              </tr>
+                            </table>  
+                          </div>
+                      </div>
+                    </div>
+      
+                  <HR>
+                      <!--ColorfulBerry Brand-->
+                      <A ID="ColorfulBerry"></A>
+                      <H2 CLASS="textBrand">ColorfulBerry</H2><BR>
+                        <div class="product-row">
+                          <div class="product-cell">
+                            <img src="product25.png" class="productImg" alt="Product Image">
+                              <h2>BerryTab 1A</h2>
+                              <p class="description-toggle">Product Specifications</p>
+                              <p>Price: RM439</p>
+                              <button CLASS="atc-button" onclick="addToCart('BerryTab 1A', 439)">Add to Cart</button>
+                              <div class="description popup-left">
+                                <table> 
+                                  <tr>
+                                    <td>Screen Size </td><td>: </td><td> 10.9 inches <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Screen Resolution </td><td>: </td><td> 2360 x 1640 (16:11) <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Screen Type </td><td>: </td><td> LCD <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Speaker </td><td>: </td><td> Stereo <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Processor </td><td>: </td><td> BerryCE <td>
+                                  </tr>
+                                  <tr>
+                                    <td>RAM </td><td>: </td><td> 3GB <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Storage </td><td>: </td><td> 32GB <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Camera </td><td>: </td><td> 1MP, 720p@30fps <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Operating System </td><td>: </td><td> BerryOS <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Bluetooth </td><td>: </td><td> Bluetooth 4.0 <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Battery </td><td>: </td><td> 3150mAh <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Warranty </td><td>: </td><td> 1 year <td>
+                                  </tr>
+                                </table>  
+                              </div>
+                          </div>
+                        <div class="product-cell">
+                          <img src="product26.png" class="productImg" alt="Product Image">
+                          <h2>BerryTab 1A Note</h2>
+                          <p class="description-toggle">Product Specifications</p>
+                          <p>Price: RM679</p>
+                          <button CLASS="atc-button" onclick="addToCart('BerryTab 1A Note', 679)">Add to Cart</button>
+                            <div class="description popup-right">
+                              <table> 
+                                <tr>
+                                  <td>Screen Size </td><td>: </td><td> 10.9 inches <td>
+                                </tr>
+                                <tr>
+                                  <td>Screen Resolution </td><td>: </td><td> 2360 x 1640 (16:11) <td>
+                                </tr>
+                                <tr>
+                                  <td>Screen Type </td><td>: </td><td> LCD <td>
+                                </tr>
+                                <tr>
+                                  <td>Speaker </td><td>: </td><td> Stereo <td>
+                                </tr>
+                                <tr>
+                                  <td>Processor </td><td>: </td><td> BerryCE <td>
+                                </tr>
+                                <tr>
+                                  <td>RAM </td><td>: </td><td> 6GB <td>
+                                </tr>
+                                <tr>
+                                  <td>Storage </td><td>: </td><td> 64GB <td>
+                                </tr>
+                                <tr>
+                                  <td>Camera </td><td>: </td><td> 4MP, HD@60fps <td>
+                                </tr>
+                                <tr>
+                                  <td>Operating System </td><td>: </td><td> BerryOS <td>
+                                </tr>
+                                <tr>
+                                  <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                                </tr>
+                                <tr>
+                                  <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                                </tr>
+                                <tr>
+                                  <td>Battery </td><td>: </td><td> 4275mAh <td>
+                                </tr>
+                                <tr>
+                                  <td>Warranty </td><td>: </td><td> 1 year <td>
+                                </tr>
+                              </table>  
+                            </div>
+                        </div>
+                        
+                      </div>
+                      <div CLASS="product-row">
+                          <div class="product-cell">
+                            <img src="product27.png" class="productImg" alt="Product Image">
+                            <h2>BerryTab 2A</h2>
+                            <p class="description-toggle">Product Specifications</p>
+                            <p>Price: RM639</p>
+                            <button CLASS="atc-button" onclick="addToCart('BerryTab 2A', 639)">Add to Cart</button>
+                            <div class="description popup-left">
+                              <table> 
+                                <tr>
+                                  <td>Screen Size </td><td>: </td><td> 11.3 inches <td>
+                                </tr>
+                                <tr>
+                                  <td>Screen Resolution </td><td>: </td><td> 2048 x 1536 (4:3) <td>
+                                </tr>
+                                <tr>
+                                  <td>Screen Type </td><td>: </td><td> LCD <td>
+                                </tr>
+                                <tr>
+                                  <td>Speaker </td><td>: </td><td> Stereo <td>
+                                </tr>
+                                <tr>
+                                  <td>Processor </td><td>: </td><td> BerryCE <td>
+                                </tr>
+                                <tr>
+                                  <td>RAM </td><td>: </td><td> 8GB <td>
+                                </tr>
+                                <tr>
+                                  <td>Storage </td><td>: </td><td> 64GB <td>
+                                </tr>
+                                <tr>
+                                  <td>Camera </td><td>: </td><td> 16MP, HD/UHD/4K@30fps/60fps <td>
+                                </tr>
+                                <tr>
+                                  <td>Operating System </td><td>: </td><td> BerryOS <td>
+                                </tr>
+                                <tr>
+                                  <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                                </tr>
+                                <tr>
+                                  <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                                </tr>
+                                <tr>
+                                  <td>Battery </td><td>: </td><td> 4525mAh <td>
+                                </tr>
+                                <tr>
+                                  <td>Warranty </td><td>: </td><td> 1 year <td>
+                                </tr>
+                              </table>  
+                            </div>
+                        </div>
+                        <div class="product-cell">
+                          <img src="product28.png" class="productImg" alt="Product Image">
+                          <h2>BerryTab 1B</h2>
+                          <p class="description-toggle">Product Specifications</p>
+                          <p>Price: RM939</p>
+                          <button CLASS="atc-button" onclick="addToCart('BerryTab 1B', 939)">Add to Cart</button>
+                            <div class="description popup-right">
+                              <table> 
+                                <tr>
+                                  <td>Screen Size </td><td>: </td><td> 12.3 inches <td>
+                                </tr>
+                                <tr>
+                                  <td>Screen Resolution </td><td>: </td><td> 2736 x 1824 (3:2) <td>
+                                </tr>
+                                <tr>
+                                  <td>Screen Type </td><td>: </td><td> LCD <td>
+                                </tr>
+                                <tr>
+                                  <td>Speaker </td><td>: </td><td> Stereo <td>
+                                </tr>
+                                <tr>
+                                  <td>Processor </td><td>: </td><td> BerryCE <td>
+                                </tr>
+                                <tr>
+                                  <td>RAM </td><td>: </td><td> 8GB <td>
+                                </tr>
+                                <tr>
+                                  <td>Storage </td><td>: </td><td> 128GB <td>
+                                </tr>
+                                <tr>
+                                  <td>Camera </td><td>: </td><td> 30MP, UHD/HD/4K@30fps/60fps <td>
+                                </tr>
+                                <tr>
+                                  <td>Operating System </td><td>: </td><td> BerryOS <td>
+                                </tr>
+                                <tr>
+                                  <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac/ax, dual-band <td>
+                                </tr>
+                                <tr>
+                                  <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                                </tr>
+                                <tr>
+                                  <td>Battery </td><td>: </td><td> 5250mAh <td>
+                                </tr>
+                                <tr>
+                                  <td>Warranty </td><td>: </td><td> 2 years <td>
+                                </tr>
+                              </table>  
+                            </div>
+                        </div>
+                      </div>
+                      <HR>
+                        <!--Oppa Brand-->
+                        <A ID="Oppa"></A>
+                        <H2 CLASS="textBrand">Oppa</H2><BR>
+                          <div class="product-row">
+                            <div class="product-cell">
+                              <img src="product29.png" class="productImg" alt="Product Image">
+                                <h2>Opad S1 Gen 1</h2>
+                                <p class="description-toggle">Product Specifications</p>
+                                <p>Price: RM639</p>
+                                <button CLASS="atc-button" onclick="addToCart('Opad S1 Gen 1', 639)">Add to Cart</button>
+                                <div class="description popup-left">
+                                  <table> 
+                                    <tr>
+                                      <td>Screen Size </td><td>: </td><td> 10.9 inches <td>
+                                    </tr>
+                                    <tr>
+                                      <td>Screen Resolution </td><td>: </td><td> 2360 x 1640 (16:11) <td>
+                                    </tr>
+                                    <tr>
+                                      <td>Screen Type </td><td>: </td><td> LCD <td>
+                                    </tr>
+                                    <tr>
+                                      <td>Speaker </td><td>: </td><td> Stereo <td>
+                                    </tr>
+                                    <tr>
+                                      <td>Processor </td><td>: </td><td> Opro Gen 1 <td>
+                                    </tr>
+                                    <tr>
+                                      <td>RAM </td><td>: </td><td> 3GB <td>
+                                    </tr>
+                                    <tr>
+                                      <td>Storage </td><td>: </td><td> 32GB <td>
+                                    </tr>
+                                    <tr>
+                                      <td>Camera </td><td>: </td><td> 1MP, 720p@30fps <td>
+                                    </tr>
+                                    <tr>
+                                      <td>Operating System </td><td>: </td><td> OPPOS <td>
+                                    </tr>
+                                    <tr>
+                                      <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                                    </tr>
+                                    <tr>
+                                      <td>Bluetooth </td><td>: </td><td> Bluetooth 4.0 <td>
+                                    </tr>
+                                    <tr>
+                                      <td>Battery </td><td>: </td><td> 3150mAh <td>
+                                    </tr>
+                                    <tr>
+                                      <td>Warranty </td><td>: </td><td> 1 year <td>
+                                    </tr>
+                                  </table>  
+                                </div>
+                            </div>
+                          <div class="product-cell">
+                            <img src="product30.png" class="productImg" alt="Product Image">
+                            <h2>Opad S1 Gen 2</h2>
+                            <p class="description-toggle">Product Specifications</p>
+                            <p>Price: RM729</p>
+                            <button CLASS="atc-button" onclick="addToCart('Opad S1 Gen 2', 729)">Add to Cart</button>
+                              <div class="description popup-right">
+                                <table> 
+                                  <tr>
+                                    <td>Screen Size </td><td>: </td><td> 10.9 inches <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Screen Resolution </td><td>: </td><td> 2360 x 1640 (16:11) <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Screen Type </td><td>: </td><td> LCD <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Speaker </td><td>: </td><td> Stereo <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Processor </td><td>: </td><td> Opro Gen 2 <td>
+                                  </tr>
+                                  <tr>
+                                    <td>RAM </td><td>: </td><td> 6GB <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Storage </td><td>: </td><td> 64GB <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Camera </td><td>: </td><td> 4MP, HD@60fps <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Operating System </td><td>: </td><td> OPPOS <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Battery </td><td>: </td><td> 4275mAh <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Warranty </td><td>: </td><td> 2 years <td>
+                                  </tr>
+                                </table>  
+                              </div>
+                          </div>
+                          
+                        </div>
+                        <div CLASS="product-row">
+                            <div class="product-cell">
+                              <img src="product31.png" class="productImg" alt="Product Image">
+                              <h2>Opad S2</h2>
+                              <p class="description-toggle">Product Specifications</p>
+                              <p>Price: RM849</p>
+                              <button CLASS="atc-button" onclick="addToCart('Opad S2', 849)">Add to Cart</button>
+                              <div class="description popup-bottom-left">
+                                <table> 
+                                  <tr>
+                                    <td>Screen Size </td><td>: </td><td> 11.3 inches <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Screen Resolution </td><td>: </td><td> 2048 x 1536 (4:3) <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Screen Type </td><td>: </td><td> LCD <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Speaker </td><td>: </td><td> Stereo <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Processor </td><td>: </td><td> Opro Gen 2 <td>
+                                  </tr>
+                                  <tr>
+                                    <td>RAM </td><td>: </td><td> 8GB <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Storage </td><td>: </td><td> 128GB <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Camera </td><td>: </td><td> 16MP, HD/UHD/4K@30fps/60fps <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Operating System </td><td>: </td><td> OPPOS <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac, dual-band <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Battery </td><td>: </td><td> 4525mAh <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Warranty </td><td>: </td><td> 2 years <td>
+                                  </tr>
+                                </table>  
+                              </div>
+                          </div>
+                          <div class="product-cell">
+                            <img src="product32.png" class="productImg" alt="Product Image">
+                            <h2>Opad S3</h2>
+                            <p class="description-toggle">Product Specifications</p>
+                            <p>Price: RM1259</p>
+                            <button CLASS="atc-button" onclick="addToCart('Opad S3', 1259)">Add to Cart</button>
+                              <div class="description popup-bottom-right">
+                                <table> 
+                                  <tr>
+                                    <td>Screen Size </td><td>: </td><td> 12.3 inches <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Screen Resolution </td><td>: </td><td> 2736 x 1824 (3:2) <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Screen Type </td><td>: </td><td> LCD <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Speaker </td><td>: </td><td> Stereo <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Processor </td><td>: </td><td> Opro Gen 2 <td>
+                                  </tr>
+                                  <tr>
+                                    <td>RAM </td><td>: </td><td> 8GB <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Storage </td><td>: </td><td> 256GB <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Camera </td><td>: </td><td> 30MP, UHD/HD/4K@30fps/60fps <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Operating System </td><td>: </td><td> OPPOS <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Wifi Connectivity </td><td>: </td><td> 802.11 a/b/g/n/ac/ax, dual-band <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Bluetooth </td><td>: </td><td> Bluetooth 5.0 <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Battery </td><td>: </td><td> 5250mAh <td>
+                                  </tr>
+                                  <tr>
+                                    <td>Warranty </td><td>: </td><td> 2 years <td>
+                                  </tr>
+                                </table>  
+                              </div>
+                          </div>
+                        </div>
+
+            
+        </div>
+        <button class="btn-cart">Cart</button>
+        <div class="checkout-box">
+            <div class="checkout-info">
+              <div class="displayCheckout">
+                <H3>CART:</H3>
+                
+                <div class="displayCartItem"> <!--left-->
+                  <div id="cartDisplay"></div>
+                </div>
+                <div class="checkout-right">
+                  <H3>Total Price: </H3>
+                    <div id="checkoutDisplay"></div>
+                        <div class="buttonCheckoutArea"><button class="btn-checkoutPage" onclick="cartPassingCheckout()">Checkout</button></div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </BODY>
+</HTML>

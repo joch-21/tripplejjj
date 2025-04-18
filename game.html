@@ -1,0 +1,89 @@
+<HTML>
+  <HEAD>
+    <TITLE>Game Page</TITLE> 
+    <link rel="stylesheet" type="text/css" href="WDGA_CSS.css">
+  </HEAD>
+  <BODY>
+    <DIV id="game">
+      <DIV class="dino" id="dino"></DIV>
+      <DIV class="rock" id="rock"></DIV>
+    </DIV>
+    <H2 id="score" class="score" id="score">0</H2>
+
+    <DIV class="button-start">
+      <BUTTON id="startButton" >Start</BUTTON>
+    </DIV>
+
+    <DIV class="button-gotochk">
+      <BUTTON ONCLICK="window.top.location.href='WDGA_chkpg.html'" >Back to Checkout Page</BUTTON>
+    </DIV>
+
+    <SCRIPT LANGUAGE="Javascript">
+      // Initialize discountAmount from localStorage or with a default value
+      var discountAmount = parseInt(window.localStorage.getItem("discountAmount")) || 0;
+      var discount;
+      var button = document.getElementById("startButton");
+      const dino = document.getElementById("dino");
+      const rock = document.getElementById("rock");
+      const score = document.getElementById("score");
+
+      button.addEventListener('click', startGame);
+
+      function saveDiscountAmount() {
+        window.localStorage.setItem("discountAmount", discountAmount);
+      }
+
+      function startGame() {
+        rock.style.animation = 'rock 1.5s infinite';
+        document.body.classList.remove('rock');
+      }
+
+      function jump() {
+        dino.classList.add("jump-animation");
+        setTimeout(() =>
+          dino.classList.remove("jump-animation"), 400);
+      }
+
+      document.addEventListener('keypress', (event) => {
+          if (!dino.classList.contains('jump-animation')) {
+              jump();
+          }
+      });
+
+      setInterval(() => {
+        const dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue('top'));
+        const rockLeft = parseInt(window.getComputedStyle(rock).getPropertyValue('left'));
+
+        if (rockLeft < 0) {
+          rock.style.display = 'none';
+          score.innerText++;
+        } else {
+          rock.style.display = '';
+        }
+
+        if (score.innerText >= 100) {
+          discount = 50;
+        } else if (score.innerText >= 50) {
+          discount = 20;
+        } else if (score.innerText >= 20) {
+          discount = 10;
+        }
+
+        if (rockLeft < 100 && rockLeft > 55 && dinoTop > 170) {
+          if (score.innerText < 20) {
+            alert("Try more score to get the discount!" + "\n\nDo you want to play again?");
+          } else {
+            alert("You got " + discount + "% discount!" + "\n\nDo you want to play again?");
+            if (discount > discountAmount) {
+              discountAmount = discount;
+              saveDiscountAmount();
+            }
+          }
+
+          location.reload();
+        }
+      });
+
+  </SCRIPT>
+  </BODY>
+</HTML>

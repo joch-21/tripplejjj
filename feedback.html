@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <title>Feedback Page</title>
+      <link rel="stylesheet" type="text/css" href="WDGA_CSS.css">
+  </head>
+  <body class="fb_body">
+    <p class="feedbackTitle">Share your Feedback with us</p>
+    <br>
+    <div class="feedbackForm">
+      <form name="feedbackForm">
+            Name (How do we call you)
+        <br>
+        <input type="text" name="userName" placeholder="Enter your name here">
+        <br>
+            E-mail (For us to contact you)
+        <br>
+        <input type="text" name="userEmail" placeholder="Enter your email here">
+        <br>
+            Your satisfaction level about our introduction page experience (Rate 1-5)
+        <br>
+            <input type="radio" name="introRating" value="1">1
+            <input type="radio" name="introRating" value="2">2
+            <input type="radio" name="introRating" value="3">3
+            <input type="radio" name="introRating" value="4">4
+            <input type="radio" name="introRating" value="5">5
+        <br><br>
+            Your satisfaction level about our e-catalog page experience (Rate 1-5)
+            <BR>
+            <INPUT TYPE="radio" NAME="ecatalogLv">1
+            <INPUT TYPE="radio" NAME="ecatalogLv">2
+            <INPUT TYPE="radio" NAME="ecatalogLv">3
+            <INPUT TYPE="radio" NAME="ecatalogLv">4
+            <INPUT TYPE="radio" NAME="ecatalogLv">5
+            <br><br>
+            Your satisfaction level about our game page experience (Rate 1-5)
+            <BR>
+            <INPUT TYPE="radio" NAME="gameLv">1
+            <INPUT TYPE="radio" NAME="gameLv">2
+            <INPUT TYPE="radio" NAME="gameLv">3
+            <INPUT TYPE="radio" NAME="gameLv">4
+            <INPUT TYPE="radio" NAME="gameLv">5
+            <BR><BR>
+            Your satisfaction level about our checkout page experience (Rate 1-5)
+            <BR>
+            <INPUT TYPE="radio" NAME="checkoutLv">1
+            <INPUT TYPE="radio" NAME="checkoutLv">2
+            <INPUT TYPE="radio" NAME="checkoutLv">3
+            <INPUT TYPE="radio" NAME="checkoutLv">4
+            <INPUT TYPE="radio" NAME="checkoutLv">5
+            <BR><BR>
+        Do you have any suggestion to make our website better? (Optional)<br>
+        <textarea id="suggestionBox" rows="5" cols="40"></textarea><br><br>
+        <input type="button" class="fbSubmitBtn" onclick="submitFeedback()" value="Submit" title="Click to submit your feedback!">
+      </form>
+    </div>
+    <SCRIPT LANGUAGE="JavaScript">
+      function submitFeedback() {
+        if (document.feedbackForm.userName.value === "") {
+          window.alert("You forgot to fill in the name!");
+          document.feedbackForm.userName.focus();
+        } else if (document.feedbackForm.userEmail.value === "") {
+          window.alert("You forgot to fill in the e-mail!");
+          document.feedbackForm.userEmail.focus();
+        } else if (!isRadioChecked("introRating")) {
+          window.alert("You forgot to fill in the satisfaction level for the introduction page!");
+        } else if (!isRadioChecked("ecatalogLv")) {
+          window.alert("You forgot to fill in the satisfaction level for the e-catalog page!");
+        } else if (!isRadioChecked("gameLv")) {
+          window.alert("You forgot to fill in the satisfaction level for the game page!");
+        } else if (!isRadioChecked("checkoutLv")) {
+          window.alert("You forgot to fill in the satisfaction level for the checkout page!");
+        } else {
+          window.alert("Thank you for filling the feedback form 😁");
+          window.top.location.href="WDGA_intro.html";  
+        }
+      }
+    
+      function isRadioChecked(radioGroupName) {
+        var radioButtons = document.getElementsByName(radioGroupName);
+        for (var i = 0; i < radioButtons.length; i++) {
+          if (radioButtons[i].checked) {
+            return true;
+          }
+        }
+        return false;
+      }
+    </SCRIPT>    
+  </body>
+</html>

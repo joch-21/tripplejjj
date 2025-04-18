@@ -1,0 +1,57 @@
+<HTML>
+<HEAD>
+    <TITLE>Navigation bar</TITLE>
+    <link rel="stylesheet" type="text/css" href="WDGA_CSS.css">
+    <STYLE TYPE= "text/css">
+        body {
+            font-family:"Times New Roman", Times, serif;
+            margin : 0;
+        }
+
+       
+    </STYLE>
+</HEAD>
+
+<BODY>
+    
+    <DIV CLASS="navbar">
+        <DIV CLASS="home-btn">
+        <A HREF="WDGA_intro.html" TARGET="_top">
+            <IMG src="home.png" alt="Home Button" title="Home">
+                
+        </A>
+        </DIV>
+        <DIV CLASS="navAudio">
+            <AUDIO SRC="intro_music.mp3" controls autoplay></AUDIO>
+        </DIV>
+       <BUTTON id="drawerBtn"></BUTTON>
+			<DIV id="drawer" class="drawer">
+			<ul>
+                <DIV CLASS="li">
+				<H3>Menu</H3>
+				<A HREF="WDGA_game.html" TARGET="_top">Game Page</A>
+				<A HREF="WDGA_purpg.html" TARGET="_top">Purchase</A>
+                </DIV>
+			</ul>
+			</DIV>
+			
+			
+			
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const drawerBtn = document.getElementById('drawerBtn');
+            const drawer = document.getElementById('drawer');
+
+            drawerBtn.addEventListener('mouseenter', function () {
+                drawer.style.display = 'block';
+            });
+
+            drawer.addEventListener('mouseleave', function () {
+                drawer.style.display = 'none';
+            });
+        });
+	</script>
+    </DIV>
+	
+</BODY>
+</HTML>

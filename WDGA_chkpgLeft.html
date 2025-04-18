@@ -1,0 +1,72 @@
+
+<HTML lang="en">
+    <head>
+        <title>
+            checkoutpageleft
+        </title>
+        <link rel="stylesheet" type="text/css" href="WDGA_CSS.css">
+    </head>
+    <body class="chk_body">
+        <DIV>
+        <script language="JavaScript">
+            window.onload = function () {
+            // Retrieve cart items and prices from localStorage
+            var cartItems = JSON.parse(window.localStorage.getItem("cartItems")) || [];
+            var itemPrices = JSON.parse(window.localStorage.getItem("itemPrices")) || [];
+            var totalPrice = parseFloat(window.localStorage.getItem("totalPrice")) || 0;
+            var discount = parseInt(window.localStorage.getItem("discountAmount")) || 0;
+
+            // Display cart items and prices separately
+            var displayContainer = document.getElementById("checkoutDisplay");
+
+            for (var i = 0; i < cartItems.length; i++) {
+                var itemContainer = document.createElement("div");
+
+                var itemName = document.createElement("p");
+                itemName.textContent = "Item Name: " + cartItems[i];
+
+                var itemPrice = document.createElement("p");
+                itemPrice.textContent = "Item Price: RM " + parseFloat(itemPrices[i]).toFixed(2);+"<BR>";
+
+                    
+                itemContainer.appendChild(itemName);
+                itemContainer.appendChild(itemPrice);
+
+                displayContainer.appendChild(itemContainer);
+                displayContainer.appendChild(document.createElement("br"));
+            }
+
+            // Display total price
+            var totalContainer = document.createElement("div");
+            var totalBeforeDiscount = totalPrice;
+            var totalBeforeDiscountElement = document.createElement("p");
+            totalBeforeDiscountElement.textContent = "Total Before Discount: RM " + totalBeforeDiscount.toFixed(2);
+    
+            var discountPercentageElement = document.createElement("p");
+            var deductedAmount = totalBeforeDiscount * (discount / 100);
+            discountPercentageElement.textContent = "Discount: " + discount + "%" + " (-RM " + deductedAmount.toFixed(2) + ")";
+    
+            var totalPriceAfterDiscountElement = document.createElement("p");
+            // Apply discount only to the total
+            var discountedTotalPrice = totalBeforeDiscount - (totalBeforeDiscount * (discount / 100));
+            totalPriceAfterDiscountElement.textContent = "Total After Discount: RM " + discountedTotalPrice.toFixed(2);
+    
+            totalContainer.appendChild(totalBeforeDiscountElement);
+            totalContainer.appendChild(discountPercentageElement);
+            totalContainer.appendChild(totalPriceAfterDiscountElement);
+    
+            displayContainer.appendChild(totalContainer);
+        };
+    </script>
+        <DIV class="checkoutPageCart">
+            <H2>Cart:</H2>
+            <div id="checkoutDisplay">
+
+            </div>
+            <BUTTON ONCLICK="window.top.location.href='WDGA_purpg.html'" CLASS="atc-button">Continue Shopping</BUTTON><BR><BR>
+            <BUTTON ONCLICK="window.top.location.href='WDGA_game.html'" CLASS="atc-button">Get Some Discount!</BUTTON><BR><BR>
+            <BUTTON ONCLICK="window.top.location.href='WDGA_feedback.html'" CLASS="atc-button">Give us some feedback!</BUTTON><BR><BR>
+        </DIV>
+    </DIV>
+    </body>
+</HTML>
